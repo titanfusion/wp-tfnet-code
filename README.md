@@ -1,7 +1,7 @@
 === TFnet Code ===
 Contributors: thetitan
-Stable tag: 1.0.0
-Tested up to: 6.2.0
+Stable tag: 1.1.0
+Tested up to: 6.4.2
 Requires at least: 6.0.0
 
 A plug-in to maintain code across WordPress versions on TitanFusion.net
