@@ -1,14 +1,14 @@
 <?php
 /**
  * @package TFnet_Code
- * @version 1.1.0
+ * @version 1.1.1
  */
 /*
 Plugin Name:TitanFusion.net Code
 Plugin URI: https://www.titanfusion.net/projects/tfnet-code
 Description: This plug-in will add any code necessary for TitanFusion.net to properly function. The intent is to maintain the additional code across theme and WordPress version updates.
 Author: Alexandar I. Tzanov
-Version: 1.1.0
+Version: 1.1.1
 Author URI: https://www.alexandartzanov.com/
 */
 
@@ -46,7 +46,7 @@ if ( ! function_exists( 'tfnet_client_cache' ) ) :
 
 		// Update headers if not viewing WordPress admin dashboard
 		if ( ! empty( $current_request_path) && ! is_admin() ) {
-			$headers[ 'Cache-Control' ] = 'private, max-age=365';
+			$headers[ 'Cache-Control' ] = 'public, max-age=84600';
 		}
 		
 		return $headers;
