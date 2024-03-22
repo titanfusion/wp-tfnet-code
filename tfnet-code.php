@@ -1,14 +1,22 @@
 <?php
 /**
  * @package TFnet_Code
+<<<<<<< HEAD
  * @version 1.2.0
+=======
+ * @version 1.1.1
+>>>>>>> bda84a2 (Change cache type to public and life to 24 hours.)
  */
 /*
 Plugin Name:TitanFusion.net Code
 Plugin URI: https://www.titanfusion.net/projects/tfnet-code
 Description: This plug-in will add any code necessary for TitanFusion.net to properly function. The intent is to maintain the additional code across theme and WordPress version updates.
 Author: Alexandar I. Tzanov
+<<<<<<< HEAD
 Version: 1.2.0
+=======
+Version: 1.1.1
+>>>>>>> bda84a2 (Change cache type to public and life to 24 hours.)
 Author URI: https://www.alexandartzanov.com/
 */
 
@@ -34,6 +42,50 @@ if ( ! function_exists( 'send_smtp_email' ) ) :
 
 endif;
 
+<<<<<<< HEAD
+=======
+// Enable client caching of content.
+if ( ! function_exists( 'tfnet_client_cache' ) ) :
+	/**
+	 * @name tfnet_client_cache
+	 * @description Enable client caching. Disabled by default by WordPress for compatibility with third-party cache plug-ins. Will run last.
+	 * @return array
+	 */
+	function tfnet_client_cache( $headers, $wp ) {
+		$current_request_path = $wp->request;
+
+		// Update headers if not viewing WordPress admin dashboard
+		if ( ! empty( $current_request_path) && ! is_admin() ) {
+			$headers[ 'Cache-Control' ] = 'public, max-age=84600';
+		}
+		
+		return $headers;
+	}
+endif;
+
+// Add Bing Clarity code (site statistics and performance)
+if ( ! function_exists( 'add_bing_clarity' ) ) :
+	/**
+	 * @name bing_clarity
+	 * @description Add Bing Clarity site statistics and performance code to page header
+	 */
+	function add_bing_clarity() {
+		if ( defined( 'BING_CLARITY_ID' ) ) {
+			$site_id = BING_CLARITY_ID;
+			echo <<<EOL
+<script type="text/javascript">
+	(function(c,l,a,r,i,t,y){
+		c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+		t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+		y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+	})(window, document, "clarity", "script", "$site_id");
+</script>
+EOL;
+		}
+	}
+endif;
+
+>>>>>>> bda84a2 (Change cache type to public and life to 24 hours.)
 // Add Filters
 add_filter( 'jetpack_remove_login_form', '__return_true' );
 add_filter( 'jetpack_sso_bypass_login_forward_wpcom', '__return_true' );
