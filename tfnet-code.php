@@ -34,29 +34,9 @@ if ( ! function_exists( 'send_smtp_email' ) ) :
 
 endif;
 
-// Enable client caching of content.
-if ( ! function_exists( 'tfnet_client_cache' ) ) :
-	/**
-	 * @name tfnet_client_cache
-	 * @description Enable client caching. Disabled by default by WordPress for compatibility with third-party cache plug-ins. Will run last.
-	 * @return array
-	 */
-	function tfnet_client_cache( $headers, $wp ) {
-		$current_request_path = $wp->request;
-
-		// Update headers if not viewing WordPress admin dashboard
-		if ( ! empty( $current_request_path) && ! is_admin() ) {
-			$headers[ 'Cache-Control' ] = 'public, max-age=84600';
-		}
-		
-		return $headers;
-	}
-endif;
-
 // Add Filters
 add_filter( 'jetpack_remove_login_form', '__return_true' );
 add_filter( 'jetpack_sso_bypass_login_forward_wpcom', '__return_true' );
-add_filter( 'wp_headers', 'tfnet_client_cache', 100, 2);
 
 // Add Actions
 add_action( 'phpmailer_init', 'send_smtp_email' );
