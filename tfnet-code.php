@@ -1,22 +1,14 @@
 <?php
 /**
  * @package TFnet_Code
-<<<<<<< HEAD
- * @version 1.2.0
-=======
  * @version 1.1.1
->>>>>>> bda84a2 (Change cache type to public and life to 24 hours.)
  */
 /*
 Plugin Name:TitanFusion.net Code
 Plugin URI: https://www.titanfusion.net/projects/tfnet-code
 Description: This plug-in will add any code necessary for TitanFusion.net to properly function. The intent is to maintain the additional code across theme and WordPress version updates.
 Author: Alexandar I. Tzanov
-<<<<<<< HEAD
-Version: 1.2.0
-=======
 Version: 1.1.1
->>>>>>> bda84a2 (Change cache type to public and life to 24 hours.)
 Author URI: https://www.alexandartzanov.com/
 */
 
@@ -42,8 +34,6 @@ if ( ! function_exists( 'send_smtp_email' ) ) :
 
 endif;
 
-<<<<<<< HEAD
-=======
 // Enable client caching of content.
 if ( ! function_exists( 'tfnet_client_cache' ) ) :
 	/**
@@ -85,10 +75,11 @@ EOL;
 	}
 endif;
 
->>>>>>> bda84a2 (Change cache type to public and life to 24 hours.)
 // Add Filters
 add_filter( 'jetpack_remove_login_form', '__return_true' );
 add_filter( 'jetpack_sso_bypass_login_forward_wpcom', '__return_true' );
+add_filter( 'wp_headers', 'tfnet_client_cache', 100, 2);
 
 // Add Actions
 add_action( 'phpmailer_init', 'send_smtp_email' );
+add_action( 'wp_head', 'add_bing_clarity', 100 );
