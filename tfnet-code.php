@@ -1,14 +1,15 @@
 <?php
 /**
  * @package TFnet_Code
- * @version 1.1.1
+ * @version 1.2.0
  */
 /*
 Plugin Name:TitanFusion.net Code
 Plugin URI: https://www.titanfusion.net/projects/tfnet-code
-Description: This plug-in will add any code necessary for TitanFusion.net to properly function. The intent is to maintain the additional code across theme and WordPress version updates.
+Description: This plug-in will add any code necessary for TitanFusion.net to properly function. The intent is to
+			maintain the additional code across theme and WordPress version updates.
 Author: Alexandar I. Tzanov
-Version: 1.1.1
+Version: 1.2.0
 Author URI: https://www.alexandartzanov.com/
 */
 
@@ -75,11 +76,39 @@ EOL;
 	}
 endif;
 
+// TFnet Code feature switch
+if ( ! function_exists( 'tfnet_code_switch' ) ) :
+	/**
+	 * @name tfnet_code_switch
+	 * @description Enable or disable features of the TFnet Code plugin via a constant in wp-config.php - TFC_OPSLIST.
+	 * @param string $feature_list
+	 * @return void
+	 */
+	function tfnet_code_switch( $feature_list ) {
+		$feature_list = explode( ',', $feature_list );
+
+		foreach ( $feature_list as $feature ) {
+			switch ( $feature ) {
+				case 'smtp_email':
+					add_action( 'phpmailer_init', 'send_smtp_email' );
+					break;
+				case 'client_cache':
+					add_filter( 'wp_headers', 'tfnet_client_cache', 100, 2);
+					break;
+				case 'bing_clarity':
+					add_action( 'wp_head', 'add_bing_clarity', 100 );
+					break;
+				default:
+					break;
+			}
+		}
+	}
+endif;
+
 // Add Filters
 add_filter( 'jetpack_remove_login_form', '__return_true' );
 add_filter( 'jetpack_sso_bypass_login_forward_wpcom', '__return_true' );
-add_filter( 'wp_headers', 'tfnet_client_cache', 100, 2);
 
-// Add Actions
-add_action( 'phpmailer_init', 'send_smtp_email' );
-add_action( 'wp_head', 'add_bing_clarity', 100 );
+if ( defined( 'TFC_OPSLIST' ) ) {
+	tfnet_code_switch( TFC_OPSLIST );
+}
